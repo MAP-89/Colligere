@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode per-user data
+xcuserdata/
+*.xcuserstate
+
+# Derived data and build products
+DerivedData/
+build/
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# SPM build cache (.build/ from CLI builds; Xcode uses DerivedData)
+.build/
+
+# Firebase credentials — NEVER commit API keys or service account files
+GoogleService-Info.plist
+*-ServiceAccount*.json
+firebase-debug.log
+
+# Anthropic / other API keys
+.env
+.env.*
+secrets.*
+
+# Claude Code (local agent config — not project source)
+.claude/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
