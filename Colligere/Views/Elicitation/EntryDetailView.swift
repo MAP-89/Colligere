@@ -74,6 +74,9 @@ struct EntryDetailView: View {
                 Toggle("Mark as collected", isOn: $entry.isCollected)
                     .onChange(of: entry.isCollected) { _, _ in
                         entry.updatedAt = Date()
+                        if let project = entry.project {
+                            FirestoreService.shared.scheduleSync(for: project)
+                        }
                     }
                 Toggle("Uncertain / needs review", isOn: $entry.isUncertain)
                     .onChange(of: entry.isUncertain) { _, _ in

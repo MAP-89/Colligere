@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------
+    // Users
+    // ---------------------------------------------------------------
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      // Collaborative-project match recommendations written by Cloud Functions.
+      // The client only reads + dismisses them; writes happen server-side.
+      match /recommendations/{recID} {
+        allow read, update, delete: if request.auth != null && request.auth.uid == uid;
+        allow create: if false;
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // Individual projects (one per LanguageProject the user owns)
+    //
+    // Note: split read/update/delete from create because `resource.data`
+    // does not exist for a create operation — only `request.resource.data`.
+    // ---------------------------------------------------------------
+    match /individualProjects/{projectID} {
+      allow read, update, delete:
+        if request.auth != null && request.auth.uid == resource.data.ownerUID;
+
+      allow create:
+        if request.auth != null && request.auth.uid == request.resource.data.ownerUID;
+    }
+
+    // ---------------------------------------------------------------
+    // Collaborative projects
+    //
+    // Readable by any signed-in user; writes are restricted to Cloud
+    // Functions running with the Admin SDK (which bypass these rules).
+    // ---------------------------------------------------------------
+    match /collaborativeProjects/{collabID} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+  }
+}

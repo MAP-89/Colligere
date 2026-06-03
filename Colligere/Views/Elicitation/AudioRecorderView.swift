@@ -48,9 +48,9 @@ final class AudioRecorderService: NSObject {
 
     func stopRecording() -> (url: URL, duration: Double)? {
         guard let recorder, isRecording else { return nil }
+        let duration = recorder.currentTime
         recorder.stop()
         let url = recorder.url
-        let duration = recorder.currentTime
         self.recorder = nil
         isRecording = false
         monitorTask?.cancel()
@@ -184,23 +184,11 @@ struct AudioRecorderView: View {
 
             if let suggestion = transcriptionSuggestion, !suggestion.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("AI suggestion — edit as needed")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    HStack(alignment: .top) {
-                        Text(suggestion)
-                            .font(.caption)
-                            .foregroundStyle(.primary)
+                    HStack {
+                        Text("Heard (orthography — not IPA)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
                         Spacer()
-                        Button("Use") {
-                            if entry.phonetic.isEmpty {
-                                entry.phonetic = suggestion
-                            }
-                            transcriptionSuggestion = nil
-                        }
-                        .font(.caption.weight(.semibold))
-                        .buttonStyle(.plain)
-                        .foregroundStyle(Color.accentColor)
                         Button {
                             transcriptionSuggestion = nil
                         } label: {
@@ -210,9 +198,14 @@ struct AudioRecorderView: View {
                         }
                         .buttonStyle(.plain)
                     }
+                    Text(suggestion)
+                        .font(.caption)
+                        .foregroundStyle(.primary)
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(10)
-                .background(Color.accentColor.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
+                .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
             }
 
             if let err = service.errorMessage {

@@ -1,7 +1,9 @@
 import Foundation
+import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import AuthenticationServices
+import GoogleSignIn
 import CryptoKit
 
 @Observable
@@ -66,6 +68,46 @@ final class AuthService {
         }
     }
 
+    // MARK: - Sign in with Google
+
+    func handleGoogleSignIn() async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+
+        do {
+            guard let presenting = topViewController() else {
+                throw AuthError.noPresentingController
+            }
+            let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: presenting)
+            guard let idToken = result.user.idToken?.tokenString else {
+                throw AuthError.invalidCredential
+            }
+            let accessToken = result.user.accessToken.tokenString
+
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: accessToken
+            )
+            let authResult = try await Auth.auth().signIn(with: credential)
+            try await syncUserDocument(for: authResult.user)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func topViewController() -> UIViewController? {
+        guard let scene = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .first(where: { $0.activationState == .foregroundActive })
+              ?? (UIApplication.shared.connectedScenes.first as? UIWindowScene),
+              let window = scene.keyWindow ?? scene.windows.first
+        else { return nil }
+        var top = window.rootViewController
+        while let presented = top?.presentedViewController { top = presented }
+        return top
+    }
+
     // MARK: - Guest / Sign-out
 
     func skipSignIn() {
@@ -73,6 +115,7 @@ final class AuthService {
     }
 
     func signOut() {
+        GIDSignIn.sharedInstance.signOut()
         try? Auth.auth().signOut()
         hasSkippedSignIn = false
     }
@@ -123,6 +166,12 @@ final class AuthService {
 
     enum AuthError: LocalizedError {
         case invalidCredential
-        var errorDescription: String? { "Could not read Apple ID credential." }
+        case noPresentingController
+        var errorDescription: String? {
+            switch self {
+            case .invalidCredential: "Could not read sign-in credential."
+            case .noPresentingController: "Couldn't present the sign-in screen."
+            }
+        }
     }
 }

@@ -31,6 +31,11 @@ secrets.*
 # Claude Code (local agent config — not project source)
 .claude/
 
+# Firebase CLI agent skills (installed by `firebase init`, not project source)
+.agents/
+skills-lock.json
+.firebase/
+
 # Fastlane
 fastlane/report.xml
 fastlane/Preview.html

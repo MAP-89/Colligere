@@ -260,7 +260,7 @@ actor TranslationService {
 
 // MARK: - Decodable response models (private)
 
-private struct AnthropicResponse: Decodable {
+nonisolated private struct AnthropicResponse: Decodable {
     let content: [ContentBlock]
     struct ContentBlock: Decodable {
         let type: String
@@ -268,14 +268,14 @@ private struct AnthropicResponse: Decodable {
     }
 }
 
-private struct AnthropicErrorBody: Decodable {
+nonisolated private struct AnthropicErrorBody: Decodable {
     let error: ErrorDetail
     struct ErrorDetail: Decodable {
         let message: String
     }
 }
 
-private struct TranslationJSON: Decodable {
+nonisolated private struct TranslationJSON: Decodable {
     let translation: String
     let confidence: String
     let notes: String

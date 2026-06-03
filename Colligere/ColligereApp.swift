@@ -1,14 +1,19 @@
 import SwiftUI
 import SwiftData
 import FirebaseCore
+import GoogleSignIn
 
 @main
 struct ColligereApp: App {
     let container: ModelContainer
-    let authService = AuthService()
+    @State private var authService: AuthService
 
     init() {
         FirebaseApp.configure()
+        if let clientID = FirebaseApp.app()?.options.clientID {
+            GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
+        }
+        _authService = State(wrappedValue: AuthService())
         do {
             container = try ModelContainer(for:
                 LanguageProject.self,
@@ -25,6 +30,9 @@ struct ColligereApp: App {
         WindowGroup {
             ContentView()
                 .environment(authService)
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
         .modelContainer(container)
     }

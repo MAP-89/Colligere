@@ -1,5 +1,6 @@
 import SwiftUI
 import AuthenticationServices
+import GoogleSignInSwift
 
 struct SignInView: View {
     @Environment(AuthService.self) private var auth
@@ -35,6 +36,17 @@ struct SignInView: View {
                     Task { await auth.handleAppleSignIn(result) }
                 }
                 .signInWithAppleButtonStyle(.black)
+                .frame(height: 54)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .disabled(auth.isLoading)
+
+                GoogleSignInButton(
+                    scheme: .light,
+                    style: .wide,
+                    state: .normal
+                ) {
+                    Task { await auth.handleGoogleSignIn() }
+                }
                 .frame(height: 54)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .disabled(auth.isLoading)

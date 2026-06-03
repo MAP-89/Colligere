@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		618192F32FCE65FF0037F244 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 618192F22FCE65FF0037F244 /* GoogleSignIn */; };
+		618192F52FCE65FF0037F244 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 618192F42FCE65FF0037F244 /* GoogleSignInSwift */; };
 		61E6F25F2FC4C91500ED7C46 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61E6F25E2FC4C91500ED7C46 /* FirebaseAuth */; };
 		61E6F2612FC4C91500ED7C46 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 61E6F2602FC4C91500ED7C46 /* FirebaseFirestore */; };
 		61E6F2632FC4C91500ED7C46 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 61E6F2622FC4C91500ED7C46 /* FirebaseFunctions */; };
@@ -36,9 +38,22 @@
 		61E6F1FE2FC4013A00ED7C46 /* ColligereUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColligereUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		618192F72FCE66210037F244 /* Exceptions for "Colligere" folder in "Colligere" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 61E6F1E62FC4013700ED7C46 /* Colligere */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		61E6F1E92FC4013700ED7C46 /* Colligere */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				618192F72FCE66210037F244 /* Exceptions for "Colligere" folder in "Colligere" target */,
+			);
 			path = Colligere;
 			sourceTree = "<group>";
 		};
@@ -59,8 +74,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				618192F32FCE65FF0037F244 /* GoogleSignIn in Frameworks */,
 				61E6F2632FC4C91500ED7C46 /* FirebaseFunctions in Frameworks */,
 				61E6F2652FC4C91500ED7C46 /* FirebaseStorage in Frameworks */,
+				618192F52FCE65FF0037F244 /* GoogleSignInSwift in Frameworks */,
 				61E6F25F2FC4C91500ED7C46 /* FirebaseAuth in Frameworks */,
 				61E6F2612FC4C91500ED7C46 /* FirebaseFirestore in Frameworks */,
 			);
@@ -127,6 +144,8 @@
 				61E6F2602FC4C91500ED7C46 /* FirebaseFirestore */,
 				61E6F2622FC4C91500ED7C46 /* FirebaseFunctions */,
 				61E6F2642FC4C91500ED7C46 /* FirebaseStorage */,
+				618192F22FCE65FF0037F244 /* GoogleSignIn */,
+				618192F42FCE65FF0037F244 /* GoogleSignInSwift */,
 			);
 			productName = Colligere;
 			productReference = 61E6F1E72FC4013700ED7C46 /* Colligere.app */;
@@ -212,6 +231,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				61E6F25D2FC4C91500ED7C46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				618192F12FCE65FF0037F244 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 61E6F1E82FC4013700ED7C46 /* Products */;
@@ -418,7 +438,9 @@
 				DEVELOPMENT_TEAM = 74KZ6YABZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Colligere/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Colligere;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Colligere uses your location to suggest the field work location for a new language project.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Colligere needs microphone access to record native speaker audio for language documentation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -452,7 +474,9 @@
 				DEVELOPMENT_TEAM = 74KZ6YABZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Colligere/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Colligere;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Colligere uses your location to suggest the field work location for a new language project.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Colligere needs microphone access to record native speaker audio for language documentation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -602,6 +626,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		618192F12FCE65FF0037F244 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 		61E6F25D2FC4C91500ED7C46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -613,6 +645,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		618192F22FCE65FF0037F244 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 618192F12FCE65FF0037F244 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		618192F42FCE65FF0037F244 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 618192F12FCE65FF0037F244 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		61E6F25E2FC4C91500ED7C46 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 61E6F25D2FC4C91500ED7C46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

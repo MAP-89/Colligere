@@ -265,6 +265,7 @@ private struct AddCustomEntrySheet: View {
         )
         context.insert(entry)
         project.entries.append(entry)
+        FirestoreService.shared.scheduleSync(for: project)
     }
 }
 
